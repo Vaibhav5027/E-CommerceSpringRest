@@ -1,4 +1,4 @@
-package com.vaibs.ecommerce;
+package com.infy.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
