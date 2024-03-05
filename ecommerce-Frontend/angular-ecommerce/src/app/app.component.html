@@ -15,10 +15,10 @@
         <nav class="navbar-sidebar">
           <ul class="list-unstyled navbar-list">
             <li>
-              <a href="#">Books</a>
+              <a href="/category/1">Books</a>
             </li>
             <li>
-              <a href="#">Coffee Mugs</a>
+              <a href="/category/2">Coffee Mugs</a>
             </li>
             <li>
               <a href="#">Mouse Pads</a>
@@ -62,6 +62,14 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- MAIN CONTENT-->
-    <app-product-list></app-product-list>
+    <!-- <app-product-list></app-product-list> -->
+    <router-outlet></router-outlet>
+    <footer>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </footer>
   </div>
 </div>
