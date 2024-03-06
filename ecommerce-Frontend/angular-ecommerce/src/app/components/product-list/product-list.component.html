@@ -1,3 +1,12 @@
 <p *ngFor="let tempProduct of products">
-    {{ tempProduct.name}}: {{ tempProduct.unitPrice | currency:'USD'}}
+  {{ tempProduct.name }}: {{ tempProduct.unitPrice | currency : "USD" }}
 </p>
+<div>
+  <p
+    *ngIf="products?.length == 0"
+    class="alert alert-warming col-md-12"
+    role="alert"
+  >
+    Product Not Found
+  </p>
+</div>

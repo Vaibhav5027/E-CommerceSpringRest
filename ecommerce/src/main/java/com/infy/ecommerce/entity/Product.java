@@ -27,6 +27,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonProperty
     private Long id;
 
     @ManyToOne

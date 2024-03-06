@@ -13,4 +13,6 @@ import com.infy.ecommerce.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	Page<Product> findByCategoryId(@Param("id") int categoryId,Pageable peagble);
+	
+	 Page<Product>  findByNameContaining(@Param("name") String name, Pageable page);
 }
