@@ -14,14 +14,16 @@ export class CartService {
     let existedCartItem: boolean = false;
     let presentCartItem: CartItem | undefined;
 
-    for (let tempCartItem of this.cartItems) {
-      if (tempCartItem.id === theCartItem.id) {
-        presentCartItem = tempCartItem;
-        existedCartItem = true;
-        break;
-      }
-    }
-
+    // for (let tempCartItem of this.cartItems) {
+    //   if (tempCartItem.id === theCartItem.id) {
+    //     presentCartItem = tempCartItem;
+    //     existedCartItem = true;
+    //     break;
+    //   }
+    // }
+    presentCartItem = this.cartItems.find(
+      (items) => items.id == theCartItem.id
+    );
     if (existedCartItem && presentCartItem) {
       presentCartItem.quantity++; // Increment quantity if the item already exists
     } else {
@@ -41,25 +43,25 @@ export class CartService {
       totalQuantityValue += tempProduct.quantity;
     }
 
-    this.totalPrice.next(totalPriceValue);
+    this.totalPrice.next(+totalPriceValue.toFixed(2));
     this.totalQuantity.next(totalQuantityValue);
-    this.logCartData(totalPriceValue, totalQuantityValue);
+    // this.logCartData(totalPriceValue, totalQuantityValue);
   }
-  logCartData(totalPriceValue: number, totalQuantityValue: number) {
-    console.log("content of the cart");
+  // logCartData(totalPriceValue: number, totalQuantityValue: number) {
+  //   console.log("content of the cart");
 
-    for (let tempCartProduct of this.cartItems) {
-      let totalSubPrice = tempCartProduct.quantity * tempCartProduct.unitPrice;
+  //   for (let tempCartProduct of this.cartItems) {
+  //     let totalSubPrice = tempCartProduct.quantity * tempCartProduct.unitPrice;
 
-      console.log(
-        `name:${tempCartProduct.name}, unitPrice:${tempCartProduct.unitPrice},totalSubPrice:${totalSubPrice}`
-      );
-      console.log(
-        `totalPrice:${totalPriceValue.toFixed(
-          2
-        )} ,totalQuantityValue:${totalQuantityValue}`
-      );
-      console.log("------------");
-    }
-  }
+  //     console.log(
+  //       `name:${tempCartProduct.name}, unitPrice:${tempCartProduct.unitPrice},totalSubPrice:${totalSubPrice}`
+  //     );
+  //     console.log(
+  //       `totalPrice:${totalPriceValue.toFixed(
+  //         2
+  //       )} ,totalQuantityValue:${totalQuantityValue}`
+  //     );
+  //     console.log("------------");
+  //   }
+  // }
 }
