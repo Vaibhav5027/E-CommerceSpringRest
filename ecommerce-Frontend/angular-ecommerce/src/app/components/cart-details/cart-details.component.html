@@ -1,0 +1,81 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div *ngIf="cartItems.length > 0">
+        <table class="table table-bordered">
+          <tr>
+            <th width="20%">ProductImage</th>
+            <th width="50%">Product Details</th>
+            <th width="20%"></th>
+          </tr>
+          <tr *ngFor="let product of cartItems">
+            <td>
+              <img src="{{ product.imageUrl }}" class="image-responsive" />
+            </td>
+            <td>
+              <p>{{ product.name }}</p>
+              <p>{{ product.unitPrice | currency : "USD" }}</p>
+            </td>
+            <td>
+              <div class="items"></div>
+              <label>Quantity:</label>
+              <div class="row no-gutters">
+                <div class="col">
+                  <button
+                    (click)="incrementQuantity(product)"
+                    class="btn btn-primary btn-sm"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="col ml-4 mr-2">{{ product.quantity }}</div>
+                <div class="col">
+                  <button
+                    (click)="decrementQuntity(product)"
+                    class="btn btn-primary btn-sm"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <button
+                  (click)="remove(product)"
+                  class="btn btn-primary btn-sm"
+                >
+                  Remove
+                </button>
+              </div>
+
+              <p class="m-2">
+                SubTotalPrice:{{
+                  product.quantity * product.unitPrice | currency : "USD"
+                }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td style="font-weight: bold">
+              <p>Total Quantity:{{ totalQuantity }}</p>
+              <p>Shipping: Free</p>
+              <p>Total Price :{{ totalPrice }}</p>
+              <div>
+                <button routerLink="/checkout" class="btn btn-primary btn-sm">
+                  CheckOut
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div
+        *ngIf="cartItems.length == 0"
+        class="alert alert-warning col-md-12"
+        role="alert"
+      >
+        Your Cart Is Empty
+      </div>
+    </div>
+  </div>
+</div>
