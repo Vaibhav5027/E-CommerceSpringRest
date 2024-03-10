@@ -11,6 +11,29 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="firstName" type="text" />
+                <div *ngIf="checkForErrors('firstName')">
+                  <div
+                    *ngIf="
+                      firstName?.invalid &&
+                      (firstName?.dirty || firstName?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="firstName?.errors?.['required'] || firstName?.errors?.['notOnlyWhiteSpace']"
+                      class="alert alert-danger mt-1"
+                    >
+                      First Name is required
+                    </div>
+                    <div
+                      *ngIf="
+                    firstName?.errors?.['minlength']|| firstName?.errors?.['notOnlyWhiteSpace']
+                  "
+                      class="alert alert-danger mt-1"
+                    >
+                      First Name must be at least 2 characters
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -20,6 +43,29 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="lastName" type="text" />
+                <div *ngIf="checkForErrors('lastName')">
+                  <div
+                    *ngIf="
+                      lastName?.invalid &&
+                      (lastName?.dirty || lastName?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="lastName?.errors?.['required']|| lastName?.errors?.['notOnlyWhiteSpace'] "
+                      class="alert alert-danger mt-1"
+                    >
+                      lastName is required
+                    </div>
+                    <div
+                      *ngIf="
+                  lastName?.errors?.['minlength']|| lastName?.errors?.['notOnlyWhiteSpace']
+                "
+                      class="alert alert-danger mt-1"
+                    >
+                      Last Name must be at least 2 characters
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -29,6 +75,25 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="email" type="text" />
+                <div *ngIf="checkForErrors('email')">
+                  <div
+                    *ngIf="email?.invalid && (email?.dirty || email?.untouched)"
+                  >
+                    <div
+                      *ngIf="email?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      email is required
+                    </div>
+                    <div
+                      *ngIf="
+                  email?.errors?.['minlength']
+                "
+                    >
+                      please enter valid email
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -48,6 +113,22 @@
                     {{ country.name }}
                   </option>
                 </select>
+                <div *ngIf="checkErrorForShipping('country')">
+                  <div
+                    *ngIf="
+                      shippingAddressCountry?.invalid &&
+                      (shippingAddressCountry?.dirty ||
+                        shippingAddressCountry?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="shippingAddressCountry?.errors?.['required']|| shippingAddressCountry?.errors?.['notOnlyWhiteSpace'] "
+                      class="alert alert-danger mt-1"
+                    >
+                      country is required
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -56,6 +137,29 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="street" type="text" />
+                <div *ngIf="checkErrorForShipping('street')">
+                  <div
+                    *ngIf="
+                      shippingAddressStreet?.invalid &&
+                      (shippingAddressStreet?.dirty ||
+                        shippingAddressStreet?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="shippingAddressStreet?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      Street is required
+                    </div>
+                    <div
+                      *ngIf="
+                  shippingAddressStreet?.errors?.['minlength']
+                "
+                    >
+                      street name must be greather than 2
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -64,6 +168,29 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="city" type="text" />
+                <div *ngIf="checkErrorForShipping('city')">
+                  <div
+                    *ngIf="
+                      shippingAddressCity?.invalid &&
+                      (shippingAddressCity?.dirty ||
+                        shippingAddressCity?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="shippingAddressCity?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      City is required
+                    </div>
+                    <div
+                      *ngIf="
+                  shippingAddressCity?.errors?.['minlength']
+                "
+                    >
+                      please enter valid city name greather than 2
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,6 +207,22 @@
                     {{ state.name }}
                   </option>
                 </select>
+                <div *ngIf="checkErrorForShipping('state')">
+                  <div
+                    *ngIf="
+                      shippingAddressState?.invalid &&
+                      (shippingAddressState?.dirty ||
+                        shippingAddressState?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="shippingAddressState?.errors?.['required']|| shippingAddressState?.errors?.['notOnlyWhiteSpace'] "
+                      class="alert alert-danger mt-1"
+                    >
+                      State is required
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -88,6 +231,29 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="zipCode" type="text" />
+                <div *ngIf="checkErrorForShipping('zipCode')">
+                  <div
+                    *ngIf="
+                      shippingAddressZipcode?.invalid &&
+                      (shippingAddressZipcode?.dirty ||
+                        shippingAddressZipcode?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="shippingAddressZipcode?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      ZipCode is required
+                    </div>
+                    <div
+                      *ngIf="
+                  shippingAddressZipcode?.errors?.['minlength']
+                "
+                    >
+                      please enter valid zipCode
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -188,14 +354,62 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="cardNumber" type="text" />
+                <div *ngIf="checkForErrorsForCreditCard('cardNumber')">
+                  <div
+                    *ngIf="
+                      creaditCardNum?.invalid &&
+                      (creaditCardNum?.dirty || creaditCardNum?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="creaditCardNum?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      Number is required
+                    </div>
+                    <div
+                      *ngIf="
+              creaditCardNum?.errors?.['pattern']
+            "
+                      class="alert alert-danger mt-1"
+                    >
+                      16 digit number required;
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-2"><label>Security Code</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="securityCode" type="text" />
+                <div *ngIf="checkForErrorsForCreditCard('securityCode')">
+                  <div
+                    *ngIf="
+                      creaditCardSecurityCode?.invalid &&
+                      (creaditCardSecurityCode?.dirty ||
+                        creaditCardSecurityCode?.untouched)
+                    "
+                  >
+                    <div
+                      *ngIf="creaditCardSecurityCode?.errors?.['required']"
+                      class="alert alert-danger mt-1"
+                    >
+                      Security Code is required
+                    </div>
+                    <div
+                      *ngIf="
+              creaditCardSecurityCode?.errors?.['pattern']
+            "
+                      class="alert alert-danger mt-1"
+                    >
+                      3 digit Security Code required;
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -226,15 +440,18 @@
               </div>
             </div>
           </div>
-          <!-- Order Details -->
-          <div class="form-area" style="font-weight: bold">
-            <p>Total Quantity:{{ totalQuantity }}</p>
-            <p>Shipping: Free</p>
-            <p>Total Price :{{ totalPrice }}</p>
-          </div>
         </div>
+        <!-- Order Details -->
+        <div class="form-area" style="font-weight: bold">
+          <p>Total Quantity:{{ totalQuantity }}</p>
+          <p>Shipping: Free</p>
+          <p>Total Price :{{ totalPrice }}</p>
+        </div>
+
         <div class="text-center">
-          <button type="submit" class="btn btn-info">Purchase</button>
+          <button type="button" (click)="purchase()" class="btn btn-info">
+            Purchase
+          </button>
         </div>
       </form>
     </div>
