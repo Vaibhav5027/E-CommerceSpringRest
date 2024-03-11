@@ -5,10 +5,15 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { CustomValidators } from "src/app/common/CustomValidators";
 import { Country } from "src/app/common/country";
+import { Order } from "src/app/common/order";
+import { OrderItem } from "src/app/common/order-item";
+import { Purchase } from "src/app/common/purchase";
 import { State } from "src/app/common/state";
 import { CartService } from "src/app/services/cart.service";
+import { CheckoutService } from "src/app/services/checkout.service";
 import { FormsServices } from "src/app/services/formservices";
 
 @Component({
@@ -29,7 +34,9 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cartService: CartService,
-    private formService: FormsServices
+    private formService: FormsServices,
+    private checkoutSerivce: CheckoutService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.cartService.totalPrice.subscribe((data) => {
@@ -114,16 +121,70 @@ export class CheckoutComponent implements OnInit {
       .subscribe((data) => (this.countries = data));
   }
   onSubmit() {
-    this.submitted = true; // Set the submitted flag to true when form is submitted
+    this.submitted = true;
+    // if (this.checkOutFormGroup.invalid) {
+    //   this.checkOutFormGroup.markAllAsTouched;
+    //   return;
+    // }
+    let order = new Order();
+    order.totalPrice = this.totalPrice;
+    order.totalQuantity = this.totalQuantity;
 
-    // Check if the form is valid before proceeding
-    if (this.checkOutFormGroup.invalid) {
-      return;
-    }
+    const cartItems = this.cartService.cartItems;
+    let orderItems: OrderItem[] = [];
+    // for (let i = 0; i < cartItems.length; i++) {
+    //   orderItems[i] = new OrderItem(cartItems[i]);
+    // }
+    // another way is
+    let orderItems1: OrderItem[] = cartItems.map(
+      (tempItem) => new OrderItem(tempItem)
+    );
 
-    // Form submission logic
-    console.log("Form submitted successfully!");
-    console.log(this.checkOutFormGroup.get("customer")?.value);
+    //setup purchase
+    let purchase = new Purchase();
+    purchase.customer = this.checkOutFormGroup.controls["customer"].value;
+
+    purchase.shippingAddress =
+      this.checkOutFormGroup.controls["shippingAddress"].value;
+    const shippingState: State = JSON.parse(
+      JSON.stringify(purchase.shippingAddress.state)
+    );
+    const shippingContry: Country = JSON.parse(
+      JSON.stringify(purchase.shippingAddress.country)
+    );
+    purchase.shippingAddress.state = shippingState.name;
+    purchase.shippingAddress.country = shippingContry.name;
+
+    purchase.billingAddress =
+      this.checkOutFormGroup.controls["billingAddress"].value;
+    const billingState: State = JSON.parse(
+      JSON.stringify(purchase.billingAddress.state)
+    );
+    const billingContry: Country = JSON.parse(
+      JSON.stringify(purchase.billingAddress.country)
+    );
+    purchase.billingAddress.state = billingState.name;
+    purchase.billingAddress.country = billingContry.name;
+
+    purchase.order = order;
+    purchase.orderItems = orderItems1;
+
+    this.checkoutSerivce.placeOrder(purchase).subscribe({
+      next: (response) => {
+        alert(`your order has been recieved: ${response.orderTrackingNumber}`);
+        this.resetCart();
+      },
+      error: (err) => {
+        alert(`something wrong:${err.message}`);
+      },
+    });
+  }
+  resetCart() {
+    this.cartService.cartItems = [];
+    this.cartService.totalPrice.next(0);
+    this.cartService.totalQuantity.next(0);
+    this.checkOutFormGroup.reset();
+    this.router.navigateByUrl("/products");
   }
   monthAndYearHandler() {
     const checkOutFormGroup: any = this.checkOutFormGroup.get("creditCard");
