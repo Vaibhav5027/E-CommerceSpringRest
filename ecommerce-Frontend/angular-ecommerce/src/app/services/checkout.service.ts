@@ -11,6 +11,7 @@ export class CheckoutService {
   constructor(private httpClient: HttpClient) {}
 
   placeOrder(purchase: Purchase): Observable<any> {
+    console.log(`purchse:` + JSON.stringify(purchase));
     return this.httpClient.post(this.purchaseUrl, purchase);
   }
 }
