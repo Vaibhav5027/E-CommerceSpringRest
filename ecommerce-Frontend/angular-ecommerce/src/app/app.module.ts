@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
@@ -15,22 +15,14 @@ import { CartStatusComponent } from "./components/cart-status/cart-status.compon
 import { CartDetailsComponent } from "./components/cart-details/cart-details.component";
 import { CheckoutComponent } from "./components/checkout/checkout.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { LoginComponent } from "./components/login/login.component";
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { initializeKeycloak } from "./utility/app.init";
+import { AuthGuard } from "./utility/app.guard";
 import { LoginstatusComponent } from "./components/loginstatus/loginstatus.component";
-import {
-  OktaCallbackComponent,
-  OKTA_CONFIG,
-  OktaAuthModule,
-} from "@okta/okta-angular";
 
-import { OktaAuth } from "@okta/okta-auth-js";
-import myAppConfig from "./config/my-app-config";
-
-const oktaConfig = myAppConfig.oidc;
-const oktaAuth = new OktaAuth(oktaConfig);
 const routes: Routes = [
-  { path: "login/callback", component: OktaCallbackComponent },
-  { path: "login", component: LoginComponent },
+  { path: "login", component: LoginstatusComponent, canActivate: [AuthGuard] },
+  { path: "checkout", component: CheckoutComponent },
   { path: "cart-details", component: CartDetailsComponent },
   { path: "product/:id", component: ProductDetailsComponent },
   { path: "search/:keyword", component: ProductListComponent },
@@ -51,7 +43,6 @@ const routes: Routes = [
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    LoginComponent,
     LoginstatusComponent,
   ],
   imports: [
@@ -60,9 +51,17 @@ const routes: Routes = [
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    OktaAuthModule,
+    KeycloakAngularModule,
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }],
+  providers: [
+    ProductService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

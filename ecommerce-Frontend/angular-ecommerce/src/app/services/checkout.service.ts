@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class CheckoutService {
-  purchaseUrl = "http://localhost:8080/api/checkout/purchase";
+  purchaseUrl = "http://localhost:8081/api/checkout/purchase";
   constructor(private httpClient: HttpClient) {}
 
   placeOrder(purchase: Purchase): Observable<any> {

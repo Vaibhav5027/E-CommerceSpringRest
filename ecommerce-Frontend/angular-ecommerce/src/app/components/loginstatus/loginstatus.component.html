@@ -2,7 +2,12 @@
   <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
     Welcome Back {{ userFullName }}
   </div>
-  <button *ngIf="!isAuthenticated" routerLink="/login" class="security-btn">
+  <button
+    *ngIf="!isAuthenticated"
+    routerLink="/login"
+    (click)="login()"
+    class="security-btn"
+  >
     Login
   </button>
   <button *ngIf="isAuthenticated" (click)="logout()" class="security-btn">

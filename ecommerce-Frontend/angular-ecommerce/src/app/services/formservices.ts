@@ -31,14 +31,14 @@ export class FormsServices {
     return of(data);
   }
   getCountries(): Observable<Country[]> {
-    const coutryUrl = `http://localhost:8080/api/countries`;
+    const coutryUrl = `http://localhost:8081/api/countries`;
 
     return this.httpClient
       .get<GetCountryResponse>(coutryUrl)
       .pipe(map((response) => response._embedded.countries));
   }
   getStates(countryCode: string): Observable<State[]> {
-    const statesUrl = `http://localhost:8080/api/states`;
+    const statesUrl = `http://localhost:8081/api/states`;
     return this.httpClient
       .get<GetStatesResponse>(
         `${statesUrl}/search/findByCountryCode?code=${countryCode}`
