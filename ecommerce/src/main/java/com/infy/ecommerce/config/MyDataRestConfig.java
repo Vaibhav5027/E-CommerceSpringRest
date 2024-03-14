@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.infy.ecommerce.entity.Country;
+import com.infy.ecommerce.entity.Order;
 import com.infy.ecommerce.entity.Product;
 import com.infy.ecommerce.entity.ProductCategory;
 import com.infy.ecommerce.entity.State;
@@ -22,8 +24,11 @@ import jakarta.persistence.metamodel.EntityType;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
   
-
+	
 	private EntityManager entityManager;
+	
+	@Value("${allowed.origins}")
+	private String[] theAllowedOrigins;
 	
 	@Autowired
 	public MyDataRestConfig(EntityManager entyManager){
@@ -36,15 +41,14 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PATCH};
 
         // disable HTTP methods for Product: PUT, POST, DELETE and PATCH
-    
-
-        // disable HTTP methods for ProductCategory: PUT, POST, DELETE and PATCH
         httpDisabled(config, theUnsupportedActions,ProductCategory.class);
         httpDisabled(config, theUnsupportedActions,Product.class);
         httpDisabled(config, theUnsupportedActions,Country.class);
         httpDisabled(config, theUnsupportedActions,State.class);
-
+        httpDisabled(config, theUnsupportedActions,Order.class);
      exposeIds(config);
+     cors.addMapping(config.getBasePath()+"/**").allowedOrigins(theAllowedOrigins);
+
     }
 
 	private void httpDisabled(RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions,Class typclass) {

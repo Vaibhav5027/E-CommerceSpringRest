@@ -19,6 +19,7 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { initializeKeycloak } from "./utility/app.init";
 import { AuthGuard } from "./utility/app.guard";
 import { LoginstatusComponent } from "./components/loginstatus/loginstatus.component";
+import { LoginpageComponent } from "./components/loginpage/loginpage.component";
 
 const routes: Routes = [
   { path: "login", component: LoginstatusComponent, canActivate: [AuthGuard] },
@@ -43,7 +44,8 @@ const routes: Routes = [
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    LoginstatusComponent,
+    // LoginstatusComponent,
+    // LoginpageComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.infy.ecommerce.entity.State;
-@CrossOrigin("http://localhost:4200/")
+
 @RepositoryRestResource
 public interface StateRepository extends JpaRepository<State, Integer> {
 

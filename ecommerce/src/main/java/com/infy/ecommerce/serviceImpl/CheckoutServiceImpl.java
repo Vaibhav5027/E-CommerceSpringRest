@@ -35,10 +35,14 @@ public class CheckoutServiceImpl implements CheckoutService {
 		Set<OrderItem> items = purchase.getOrderItems();
 		items.forEach(data->order.add(data));
 		Customer customer = purchase.getCustomer();
-		customer.addOrder(order);
 		
+		String email=customer.getEmail();
+		Customer customerDB = customerRepo.findByEmail(email);
+		if(customerDB!=null) {
+			customer=customerDB;
+		}
+		customer.addOrder(order);
 		customerRepo.save(customer);
-	
 		return new PurchaseResponse(orderTrackingNumber);
 	}
 

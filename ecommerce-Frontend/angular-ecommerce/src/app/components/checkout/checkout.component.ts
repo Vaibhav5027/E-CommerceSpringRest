@@ -122,10 +122,10 @@ export class CheckoutComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    // if (this.checkOutFormGroup.invalid) {
-    //   this.checkOutFormGroup.markAllAsTouched;
-    //   return;
-    // }
+    if (this.checkOutFormGroup.invalid) {
+      this.checkOutFormGroup.markAllAsTouched;
+      return;
+    }
     let order = new Order();
     order.totalPrice = this.totalPrice;
     order.totalQuantity = this.totalQuantity;
