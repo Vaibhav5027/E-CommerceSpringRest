@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-loginstatus",
@@ -6,13 +8,24 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./loginstatus.component.css"],
 })
 export class LoginstatusComponent implements OnInit {
-  isAuthenticated: boolean = false;
-  login() {
-    this.isAuthenticated = true;
-  }
-  logout() {
-    this.isAuthenticated = false;
-  }
+  checkOutFormGroup: FormGroup = new FormGroup({});
+
+  constructor(
+    private formBuilder: FormBuilder,
+
+    private router: Router
+  ) {}
+
+  logout() {}
   userFullName: any;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checkOutFormGroup = this.formBuilder.group({
+      user: this.formBuilder.group({
+        firstName: "",
+        lastName: "",
+      }),
+    });
+  }
+
+  onSubmit() {}
 }

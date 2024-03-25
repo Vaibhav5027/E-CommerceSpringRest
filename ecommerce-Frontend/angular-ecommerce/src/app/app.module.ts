@@ -14,15 +14,16 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CartStatusComponent } from "./components/cart-status/cart-status.component";
 import { CartDetailsComponent } from "./components/cart-details/cart-details.component";
 import { CheckoutComponent } from "./components/checkout/checkout.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
-import { initializeKeycloak } from "./utility/app.init";
+// import { initializeKeycloak } from "./utility/app.init";
 import { AuthGuard } from "./utility/app.guard";
 import { LoginstatusComponent } from "./components/loginstatus/loginstatus.component";
 import { LoginpageComponent } from "./components/loginpage/loginpage.component";
 
 const routes: Routes = [
-  { path: "login", component: LoginstatusComponent, canActivate: [AuthGuard] },
+  { path: "login", component: LoginstatusComponent },
+  // { path: "login", component: LoginstatusComponent, canActivate: [AuthGuard] },
   { path: "checkout", component: CheckoutComponent },
   { path: "cart-details", component: CartDetailsComponent },
   { path: "product/:id", component: ProductDetailsComponent },
@@ -44,26 +45,18 @@ const routes: Routes = [
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    // LoginstatusComponent,
-    // LoginpageComponent,
+    LoginstatusComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbModule,
+    FormsModule,
     ReactiveFormsModule,
     KeycloakAngularModule,
   ],
-  providers: [
-    ProductService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
-    },
-  ],
+  providers: [ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

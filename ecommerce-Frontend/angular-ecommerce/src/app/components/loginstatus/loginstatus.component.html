@@ -1,16 +1,28 @@
-<div class="login-status-header">
-  <div *ngIf="isAuthenticated && userFullName" class="login-status-user-info">
-    Welcome Back {{ userFullName }}
+<div class="main-content page-m">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form [formGroup]="checkOutFormGroup" (ngSubmit)="onSubmit()">
+        <div formGroupName="user" class="form-area">
+          <h3>User</h3>
+
+          <div class="row">
+            <div class="col-md-2"><label>User Name</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="userName" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"><label>Password</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="password" type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-  <button
-    *ngIf="!isAuthenticated"
-    routerLink="/login"
-    (click)="login()"
-    class="security-btn"
-  >
-    Login
-  </button>
-  <button *ngIf="isAuthenticated" (click)="logout()" class="security-btn">
-    Logout
-  </button>
 </div>
