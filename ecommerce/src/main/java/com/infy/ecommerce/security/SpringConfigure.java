@@ -24,9 +24,10 @@ public class SpringConfigure {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable()).
-               authorizeHttpRequests(auth->auth.requestMatchers("api/login").permitAll()).
+//               authorizeHttpRequests(auth->auth.requestMatchers("api/login").permitAll()).
+//        authorizeHttpRequests(auth->auth.requestMatchers("api/login").permitAll()).
                authorizeHttpRequests(auth->auth.anyRequest()
-                       .authenticated())
+                       .permitAll())
                 
               .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
